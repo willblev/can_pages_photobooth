@@ -33,20 +33,18 @@ class Novios:
 novios=Novios(['Sal','Berta'], 'eng')
 
 print(novios.photo_string(' + '))
-scripts_directory="~/can_pages_photobooth"
-photos_directory="~/Pictures/"+time.strftime("%d-%m-%Y")+"_"+novios.names[0]+"_"+novios.names[1]
-temp_photos_directory="~/Pictures/temp"
+scripts_directory="/home/pi/can_pages_photobooth"
+photos_directory="/home/pi/Pictures/"+time.strftime("%d-%m-%Y")+"_"+novios.names[0]+"_"+novios.names[1]
+temp_photos_directory="/home/pi/Pictures/temp"
 
-try:
-    os.makedirs(temp_photos_directory)
-except OSError as e:
-    if e.errno != errno.EEXIST:
-        raise
-try:
-    os.makedirs(photos_directory)
-except OSError as e:
-    if e.errno != errno.EEXIST:
-        raise
+if not os.path.exists(photos_directory):
+	os.makedirs(photos_directory)
+print("Created "+photos_directory)
+
+if not os.path.exists(temp_photos_directory):
+	os.makedirs("/home/pi/Pictures/temp")
+	print("Created "+temp_photos_directory)
+    
 
 
 # snap=0
@@ -54,7 +52,7 @@ except OSError as e:
   # print("pose!")
   # time.sleep(3.5)
   # print("SNAP")
-  # gpout = subprocess.check_output("gphoto2 --capture-image-and-download --filename %s/photobooth%H%M%S.jpg"%(temp_photo_directory), stderr=subprocess.STDOUT, shell=True)
+  # gpout = subprocess.check_output("gphoto2 --capture-image-and-download --filename %s/snap%H%M%S.jpg"%(temp_photo_directory), stderr=subprocess.STDOUT, shell=True)
   # print(gpout)
   # if "ERROR" not in gpout: 
 	# snap += 1
