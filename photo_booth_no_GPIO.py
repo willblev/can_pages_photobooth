@@ -2,6 +2,14 @@
 
 import  locale, time, os, subprocess, errno
 
+######## Create directories, open log file
+scripts_directory="/home/pi/can_pages_photobooth"
+photos_directory="/home/pi/Pictures/"+time.strftime("%d-%m-%Y")+"_"+novios.names[0]+"_"+novios.names[1]
+temp_photos_directory="/home/pi/Pictures/temp"
+log_file=open("%s/logfile.txt" % scripts_directory, 'w')
+if not os.path.exists(photos_directory):
+	os.makedirs(photos_directory)
+	print("Created "+photos_directory)
 
 ########  Define global variables, classes, functions
 modes=['single','photostrip','2x2']
@@ -64,30 +72,35 @@ def create_photo_montage(text,mode):
 			subprocess.check_output("%s" % command, shell=True)
 		except subprocess.CalledProcessError as e:
 			print e.output
+			log_file.write(e.output)
 		try:         
 			command="mogrify -resize 968x648 %s/*.jpg" % (temp_photos_directory)
 			print(command)
 			subprocess.check_output("%s" % command, shell=True)
 		except subprocess.CalledProcessError as e:
 			print e.output
+			log_file.write(e.output)
 		try:         
 			command="montage %s/*.jpg -tile 2x2 -geometry +10+10 %s/temp_montage2.jpg" % (temp_photos_directory,temp_photos_directory)
 			print(command)
 			subprocess.check_output("%s" % command, shell=True)
 		except subprocess.CalledProcessError as e:
-			print e.output			
+			print e.output
+			log_file.write(e.output)			
 		try:         
 			command="montage %s/temp_montage2.jpg %s/photobooth_label.jpg -tile 2x1 -geometry +5+5 %s/temp_montage_final.jpg" % (temp_photos_directory,temp_photos_directory,temp_photos_directory)
 			print(command)
 			subprocess.check_output("%s" % command, shell=True)
 		except subprocess.CalledProcessError as e:
-			print e.output			
+			print e.output
+			log_file.write(e.output)			
 		try:         
 			command="cp %s/temp_montage_final.jpg %s/Can_Pages_Photobooth_2x2_%s:%s:%s.jpg" % (temp_photos_directory,photos_directory,time.strftime("%H"),time.strftime("%M"),time.strftime("%S"))
 			print(command)
 			subprocess.check_output("%s" % command, shell=True)
 		except subprocess.CalledProcessError as e:
-			print e.output			
+			print e.output
+			log_file.write(e.output)			
 	
 	elif mode=="photostrip":
 		pass
@@ -103,7 +116,8 @@ def send_image_to_printer():
 		print(command)
 		subprocess.check_output("%s" % command, shell=True)
 	except subprocess.CalledProcessError as e:
-		print e.output			
+		print e.output
+		log_file.write(e.output)			
 
 def clear_temp_directory():
 	try:         
@@ -111,23 +125,20 @@ def clear_temp_directory():
 		print(command)
 		subprocess.check_output("%s" % command, shell=True)
 	except subprocess.CalledProcessError as e:
-		print e.output			
+		print e.output
+		log_file.write(e.output)			
 
 		
 		
 ########  Get input for names and language from a configuration file
 novios=Novios(['Will','Katie'], 'eng')
 
-######## Create directories
-scripts_directory="/home/pi/can_pages_photobooth"
-photos_directory="/home/pi/Pictures/"+time.strftime("%d-%m-%Y")+"_"+novios.names[0]+"_"+novios.names[1]
-temp_photos_directory="/home/pi/Pictures/temp"
-
-if not os.path.exists(photos_directory):
-	os.makedirs(photos_directory)
-	print("Created "+photos_directory)
 
 capture_pictures("2x2")
 create_photo_montage(novios.photo_string(' & '), '2x2')
 send_image_to_printer()
 #clear_temp_directory()
+
+
+
+log_file.close()
