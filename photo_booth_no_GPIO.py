@@ -141,4 +141,4 @@ send_image_to_printer()
 
 
 
-log_file.close()
+
