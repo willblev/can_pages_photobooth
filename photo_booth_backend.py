@@ -122,7 +122,7 @@ def create_photo_montage(text,mode):
 				print(command)
 				subprocess.check_output("%s" % command, shell=True)
 				try:         
-					command="convert -background white -size 1100x80 -fill black -font Piboto-Bold -gravity center  label:'%s' -rotate 270 %s/photobooth_label.jpg" % (text,temp_photos_directory)
+					command="convert -background white -size 1100x80 -fill black -font goingtodogreatthings -gravity center  label:'%s' -rotate 270 %s/photobooth_label.jpg" % (text,temp_photos_directory)
 					print(command)
 					subprocess.check_output("%s" % command, shell=True)
 					try:         
@@ -199,4 +199,4 @@ if not os.path.exists(photos_directory):
 	print("Created "+photos_directory)
 
 capture_pictures("2x2")
-create_photo_montage(novios.photo_string(' & '), '2x2')
+create_photo_montage(novios.photo_string(' & '), '1x4')
