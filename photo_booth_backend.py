@@ -13,14 +13,15 @@
 import  locale, time, os, subprocess, errno
 
 
-########  Define global variables, classes, functions
-modes=['single','photostrip','2x2']
+########  Define global variables
+modes=['single','1x4','2x2']
+fonts_list=['goingtodogreatthings']
 language_dict={		   # dictionary to set the language/locale for each event	
 				'eng':'en_US.UTF-8', 
 				'esp':'es_ES.UTF-8', 
 				'cat':'ca_ES.UTF-8'
 				}
-
+######## Define class objects
 class Novios:
 	"""
 	A class with the following attributes:
@@ -37,6 +38,41 @@ class Novios:
 			 combiner=' ' 
 		photo_string="%s%s%s   %s %s %s" % (self.names[0], combiner,self.names[1],time.strftime("%d").lstrip("0"),time.strftime("%B"),time.strftime("%Y"))	
 		return photo_string
+		
+
+class Cumple:
+	"""
+	A class with the following attributes:
+	Cumple(name,language)
+	name: A string the name of the birthday boy/girl, as they wish for it to appear on the printed photos
+	language: a three letter string representing the language of the event [eng, esp, cat]
+	"""
+	def __init__(self, name, language):
+		self.name = name
+		self.language = language
+		locale.setlocale(locale.LC_ALL, language_dict[self.language]) # set the preferred language (i.e. locale) for the event
+
+	def photo_string(self):
+		photo_string="%s%s%s   %s %s %s" % (self.name,time.strftime("%d").lstrip("0"),time.strftime("%B"),time.strftime("%Y"))	
+		return photo_string
+		
+class Custom:
+	"""
+	A class with the following attributes:
+	Custom(text,language)
+	text: A text string as they wish for it to appear on the printed photos
+	language: a three letter string representing the language of the event [eng, esp, cat]
+	"""
+	def __init__(self, text, language):
+		self.text = text
+		self.language = language
+		locale.setlocale(locale.LC_ALL, language_dict[self.language]) # set the preferred language (i.e. locale) for the event
+
+	def photo_string(self):
+		photo_string=text	
+		return photo_string
+
+########## Define functions
 
 def capture_pictures(mode):
 	"""
@@ -63,7 +99,27 @@ def capture_pictures(mode):
 	else: 
 		pass
 		
-def create_photo_montage(text,mode):
+def create_photo_montage(font,text,mode):
+	"""
+	A function which creates the photo montage using ImageMagik shell calls
+	"""
+	if mode=="2x2":		
+		try:         
+			command="convert -background white -size 1100x110 -fill black -font '%s' -gravity center  label:'%s' -rotate 270 %s/photobooth_label.jpg" % (font, text, temp_photos_directory)
+			# print(command)
+			subprocess.check_output("%s" % command, shell=True)
+		except subprocess.CalledProcessError as e:
+			print e.output
+
+	elif mode=="photostrip" or mode =='1x4':
+		pass
+	elif mode=="single":
+		pass
+	else: 
+		pass		
+		
+		
+def create_photo_montage(font,text,mode):
 	"""
 	A function which creates a photo montage, either 10x15 or 5x15cm (two strips)
 	"""
@@ -78,7 +134,7 @@ def create_photo_montage(text,mode):
 				print(command)
 				subprocess.check_output("%s" % command, shell=True)
 				try:         
-					command="convert -background white -size 1100x110 -fill black -font goingtodogreatthings -gravity center  label:'%s' -rotate 270 %s/photobooth_label.jpg" % (text,temp_photos_directory)
+					command="convert -background white -size 1100x110 -fill black -font '%s' -gravity center  label:'%s' -rotate 270 %s/photobooth_label.jpg" % (font, text ,temp_photos_directory)
 					print(command)
 					subprocess.check_output("%s" % command, shell=True)
 					try:         
@@ -122,7 +178,7 @@ def create_photo_montage(text,mode):
 				print(command)
 				subprocess.check_output("%s" % command, shell=True)
 				try:         
-					command="convert -background white -size 1100x80 -fill black -font goingtodogreatthings -gravity center  label:'%s' -rotate 270 %s/photobooth_label.jpg" % (text,temp_photos_directory)
+					command="convert -background white -size 1100x80 -fill black -font '%s' -gravity center  label:'%s' -rotate 270 %s/photobooth_label.jpg" % (font, text, temp_photos_directory)
 					print(command)
 					subprocess.check_output("%s" % command, shell=True)
 					try:         
@@ -130,7 +186,7 @@ def create_photo_montage(text,mode):
 						print(command)
 						subprocess.check_output("%s" % command, shell=True)
 						try:         
-							command="montage %s/temp_montage3.jpg %s/temp_montage3.jpg -tile 2x1 -geometry +5+5 %s/temp_montage_final.jpg" % (temp_photos_directory,temp_photos_directory,temp_photos_directory)
+							command="montage %s/temp_montage3.jpg %s/temp_montage3.jpg -tile 2x1 -geometry +5+5 -rotate 270 %s/temp_montage_final.jpg" % (temp_photos_directory,temp_photos_directory,temp_photos_directory)
 							print(command)
 							subprocess.check_output("%s" % command, shell=True)
 							try:         
@@ -143,7 +199,7 @@ def create_photo_montage(text,mode):
 									print(command)
 									subprocess.check_output("%s" % command, shell=True)
 									try:         
-										#command="rm %s/*.jpg" % (temp_photos_directory)
+										command="rm %s/*.jpg" % (temp_photos_directory)
 										print(command)
 										subprocess.check_output("%s" % command, shell=True)
 									except subprocess.CalledProcessError as e:
@@ -176,13 +232,13 @@ def send_image_to_printer(file_name):
 	except subprocess.CalledProcessError as e:
 		print e.output			
 
-#def clear_temp_directory():
-	#try:         
-		#command="rm %s/*.jpg" % (temp_photos_directory)
-		#print(command)
-		#subprocess.check_output("%s" % command, shell=True)
-	#except subprocess.CalledProcessError as e:
-		#print e.output			
+def clear_temp_directory():
+	try:         
+		command="rm %s/*.jpg" % (temp_photos_directory)
+		print(command)
+		subprocess.check_output("%s" % command, shell=True)
+	except subprocess.CalledProcessError as e:
+		print e.output			
 
 		
 		
@@ -199,4 +255,4 @@ if not os.path.exists(photos_directory):
 	print("Created "+photos_directory)
 
 capture_pictures("2x2")
-create_photo_montage(novios.photo_string(' & '), '1x4')
+create_photo_montage(fonts_list[0],novios.photo_string(' & '), '1x4')

@@ -37,7 +37,6 @@ class Novios:
 		photo_string="%s%s%s   %s %s %s" % (self.names[0], combiner,self.names[1],time.strftime("%d").lstrip("0"),time.strftime("%B"),time.strftime("%Y"))	
 		return photo_string
 
-<<<<<<< HEAD
 class Cumple:
 	"""
 	A class with the following attributes:
@@ -91,8 +90,6 @@ def create_photo_montage(text,mode):
 	else: 
 		pass		
 		
-=======
->>>>>>> c2884328c3bbdf74773a47163f6695e0447ffbc9
 def capture_pictures(mode):
 	"""
 	A function which calls gphoto2 to capture the images
@@ -190,7 +187,6 @@ def clear_temp_directory():
 ########  Get input for names and language from a configuration file
 novios=Novios(['Will','Katie'], 'eng')
 
-<<<<<<< HEAD
 print(novios.photo_string(' + '))
 ######## Create directories
 scripts_directory="/home/pi/can_pages_photobooth"
@@ -200,8 +196,6 @@ temp_photos_directory="/home/pi/Pictures/temp"
 if not os.path.exists(photos_directory):
 	os.makedirs(photos_directory)
 	print("Created "+photos_directory)
-=======
->>>>>>> c2884328c3bbdf74773a47163f6695e0447ffbc9
 
 capture_pictures("2x2")
 create_photo_montage(novios.photo_string(' & '), '2x2')
