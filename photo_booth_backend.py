@@ -126,11 +126,11 @@ def create_photo_montage(font,text,mode):
 	new_file_name=''
 	if mode=="2x2":		
 		try:         
-			command="mogrify -resize 968x648 %s/*.jpg" % (temp_photos_directory)
+			command="mogrify -resize 968x648 %s/capture*.jpg" % (temp_photos_directory)
 			print(command)
 			subprocess.check_output("%s" % command, shell=True)
 			try:         
-				command="montage %s/*.jpg -tile 2x2 -geometry +10+10 %s/temp_montage2.jpg" % (temp_photos_directory,temp_photos_directory)
+				command="montage %s/capture*.jpg -tile 2x2 -geometry +10+10 %s/temp_montage2.jpg" % (temp_photos_directory,temp_photos_directory)
 				print(command)
 				subprocess.check_output("%s" % command, shell=True)
 				try:         
@@ -170,11 +170,11 @@ def create_photo_montage(font,text,mode):
 			print e.output					
 	elif mode=="1x4":
 		try:         
-			command="mogrify -resize 484x324 %s/*.jpg" % (temp_photos_directory)
+			command="mogrify -resize 484x324 %s/capture*.jpg" % (temp_photos_directory)
 			print(command)
 			subprocess.check_output("%s" % command, shell=True)
 			try:         
-				command="montage %s/*.jpg -tile 1x4 -geometry +5+5 %s/temp_montage2.jpg" % (temp_photos_directory,temp_photos_directory)
+				command="montage %s/capture*.jpg -tile 1x4 -geometry +5+5 %s/temp_montage2.jpg" % (temp_photos_directory,temp_photos_directory)
 				print(command)
 				subprocess.check_output("%s" % command, shell=True)
 				try:         
@@ -186,7 +186,7 @@ def create_photo_montage(font,text,mode):
 						print(command)
 						subprocess.check_output("%s" % command, shell=True)
 						try:         
-							command="montage %s/temp_montage3.jpg %s/temp_montage3.jpg -tile 2x1 -geometry +5+5 -rotate 270 %s/temp_montage_final.jpg" % (temp_photos_directory,temp_photos_directory,temp_photos_directory)
+							command="montage %s/temp_montage3.jpg %s/temp_montage3.jpg -tile 1x2 -geometry +5+5 -rotate 270 %s/temp_montage_final.jpg" % (temp_photos_directory,temp_photos_directory,temp_photos_directory)
 							print(command)
 							subprocess.check_output("%s" % command, shell=True)
 							try:         
