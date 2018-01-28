@@ -1,3 +1,4 @@
+# adding comment
 import  locale, time, os, subprocess, errno
 temp_photos_directory="/home/william/github/can_pages_photobooth/example_images" 
 font='goingtodogreatthings'
