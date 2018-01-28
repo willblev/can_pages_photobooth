@@ -43,7 +43,7 @@ class Novios:
 class Cumple:
 	"""
 	A class with the following attributes:
-	Cumple(name,language)
+	Cumple(name, language)
 	name: A string the name of the birthday boy/girl, as they wish for it to appear on the printed photos
 	language: a three letter string representing the language of the event [eng, esp, cat]
 	"""
