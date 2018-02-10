@@ -1,21 +1,13 @@
 #!/usr/bin/python
 #Creating Saved Options
 
-#Saved options are supported in CUPS through printer instances. Printer instances are, as their name implies, copies of a printer that have certain options associated with them. Use the lpoptions command to create a printer instance:
-
-#lpoptions -p printer/instance -o name=value ...
-#The -p printer/instance option provides the name of the instance, which is always the printer name, a slash, and the instance name which can contain any printable characters except space and slash. The remaining options are then associated with the instance instead of the main queue. For example, the following command creates a duplex instance of the LaserJet queue:
-
-#lpoptions -p LaserJet/duplex -o sides=two-sided-long-edge
-#Instances do not inherit lpoptions from the main queue.
-
 
 import  locale, time, os, subprocess, errno
 
 
 ########  Define global variables
 modes=['single','1x4','2x2']
-fonts_list=['goingtodogreatthings']
+fonts_list=['goingtodogreatthings', 'Moon Flower Bold:style=Regular']
 language_dict={		   # dictionary to set the language/locale for each event	
 				'eng':'en_US.UTF-8', 
 				'esp':'es_ES.UTF-8', 
@@ -195,7 +187,7 @@ def create_photo_montage(font,text,mode):
 								print(command)
 								subprocess.check_output("%s" % command, shell=True)
 								try:         
-									command="lp %s" % (new_file_name)
+									command="lp -d Dai_Nippon_Printing_DS40/1x4 %s" % (new_file_name)
 									print(command)
 									subprocess.check_output("%s" % command, shell=True)
 									try:         
@@ -255,4 +247,4 @@ if not os.path.exists(photos_directory):
 	print("Created "+photos_directory)
 
 capture_pictures("2x2")
-create_photo_montage(fonts_list[0],novios.photo_string(' & '), '1x4')
+create_photo_montage(fonts_list[1],novios.photo_string(' & '), '2x2')
