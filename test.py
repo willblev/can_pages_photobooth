@@ -35,6 +35,6 @@ print(command)
 subprocess.check_output("%s" % command, shell=True)
 
 ## combine 2 strips and rotate for printing (no strip between them in the middle!)
-command="montage %s/temp_montage3.jpg %s/temp_montage3.jpg -tile 1x2 -geometry -rotate 90 %s/temp_montage_final.jpg" % (temp_photos_directory,temp_photos_directory,temp_photos_directory)
+command="montage %s/temp_montage3.jpg %s/temp_montage3.jpg -tile 1x2 -geometry +20+20 -rotate 270 %s/temp_montage_final.jpg" % (temp_photos_directory,temp_photos_directory,temp_photos_directory)
 print(command)
 subprocess.check_output("%s" % command, shell=True)
