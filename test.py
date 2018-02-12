@@ -15,17 +15,17 @@ subprocess.check_output("%s" % command, shell=True)
 #subprocess.check_output("%s" % command, shell=True)
 
 #stack and add white border to each photo
-command="montage %s/capture*.jpg -tile 1x4 -geometry +10+10 %s/temp_montage2.jpg" % (temp_photos_directory,temp_photos_directory)
+command="montage %s/capture*.jpg -tile 1x4 -geometry +20+20 %s/temp_montage2.jpg" % (temp_photos_directory,temp_photos_directory)
 print(command)
 subprocess.check_output("%s" % command, shell=True)
 
 ## create label
-command="convert -background white -size 1940x640 -fill black -font '%s' -gravity center  label:'%s'  %s/photobooth_label.jpg" % (font, text, temp_photos_directory)
+command="convert -background white -size 1960x660 -fill black -font '%s' -gravity center  label:'%s'  %s/photobooth_label.jpg" % (font, text, temp_photos_directory)
 print(command)
 subprocess.check_output("%s" % command, shell=True)
 
 ## add label + whitespace beneath 4 stacked photos
-command="montage %s/temp_montage2.jpg %s/photobooth_label.jpg -tile 1x2 -geometry +10+10 %s/temp_montage3.jpg" % (temp_photos_directory,temp_photos_directory,temp_photos_directory)
+command="montage %s/temp_montage2.jpg %s/photobooth_label.jpg -tile 1x2 -geometry +30+30 %s/temp_montage3.jpg" % (temp_photos_directory,temp_photos_directory,temp_photos_directory)
 print(command)
 subprocess.check_output("%s" % command, shell=True)
 
@@ -35,6 +35,6 @@ print(command)
 subprocess.check_output("%s" % command, shell=True)
 
 ## combine 2 strips and rotate for printing (no strip between them in the middle!)
-command="montage %s/temp_montage3.jpg %s/temp_montage3.jpg -tile 1x2 -geometry +20+20 -rotate 270 %s/temp_montage_final.jpg" % (temp_photos_directory,temp_photos_directory,temp_photos_directory)
+command="montage %s/temp_montage3.jpg %s/temp_montage3.jpg -tile 1x2 -geometry +0+0 -rotate 270 %s/temp_montage_final.jpg" % (temp_photos_directory,temp_photos_directory,temp_photos_directory)
 print(command)
 subprocess.check_output("%s" % command, shell=True)
