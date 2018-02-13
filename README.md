@@ -1,14 +1,29 @@
 Can Pages Photobooth
 ====================
 
-This is a repository for the Can Pages Photobooth
-:-)  
+**Bienvenido al manual del Can Pages Photobooth! Aquí encontrarás toda la información necesaria para el uso habitual del Photobooth. El manual esta dividido en varias secciónes:**
 
 
-| Type   | Single picture | Four stacked  | Four stacked, 10px border | Adding 640 px strip to bottom, w/ 10 px border to each object | two copies | two side by side, rotated |
-|--------|----------------|---------------|---------------------------|---------------------------------------------------------------|------------|---------------------------|
-|        |                |               |                           |                                                               |            |                           |
-| Width  | 1920           | 1920          | 1940                      | 1960                                                          | 3920       | 5880                      |
-| Height | 1280           | 5120          | 5200                      | 5880                                                          | 5880       | 3920                      |
-|        |                |               |                           |                                                               |            |                           |
-| ratio  | 1.5            |               |                           |                                                               |            | 1.5                       |
+- Las partes del Photobooth
+- Inicio y configuración: como encender y empezar un evento
+- Recargas de papel y tinta 
+
+
+
+¡Advertencia! Es muy importante seguir el protocolo apropiado para encender y apagar el Photobooth. Si se corta la electricidad sin seguir el protocolo, puede causar graves problemas incluyendo la avería de la impresora, la cámara, el ordenador, la perdida de fotos, o otros problemas.
+
+
+
+Inicio y configuración
+-------
+En la fachada frontal del Photobooth hay una cerradura detrás de una funda metálica circular- introduce la llave asegurando que el ciruclito marcado en la llave corresponde con el circulito rojo marcado en la cerradura y gira sentido horario (hacia la derecha) 90'. Abre la fachada y abre la impresora con 
+
+
+
+Cambiar los rollos de papel y tinta
+--------
+1. 
+
+Videos del proceso:
+https://www.youtube.com/watch?v=XCmo0NuW0Sc
+https://www.youtube.com/watch?v=pOSRjdlNEK4
