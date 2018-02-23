@@ -94,15 +94,15 @@ def import_config_file(config_file):
 	with open(config_file,'r') as configuration:
 		for line in configuration:
 			if line.startswith('LANGUAGE:'):
-				language=line.split(':')[1].rstrip()
+				language=line.split(':')[1].rstrip().lstrip()
 			elif line.startswith('FIRSTLINE:'):
-				firstline=line.lstrip('FIRSTLINE:')
+				firstline=line.lstrip('FIRSTLINE:').lstrip()
 			elif line.startswith('SECONDLINE:'):
-				secondline=line.lstrip('SECONDLINE:')
+				secondline=line.lstrip('SECONDLINE:').lstrip()
 			elif line.startswith('FONT:'):
-				font=line.split(':')[1].rstrip()
+				font=line.split(':')[1].rstrip().lstrip()
 			elif line.startswith('MODE:'):
-				mode=line.split(':')[1].rstrip()
+				mode=line.split(':')[1].rstrip().lstrip()
 		text="%s\n%s"%(firstline,secondline)
 	locale.setlocale(locale.LC_ALL, language_dict[language]) # set the preferred language (i.e. locale) for the event
 def clear_temp_directory():
@@ -256,10 +256,13 @@ def prompt_screen(inputText,fontSize):
 
 import_config_file("/home/pi/can_pages_photobooth/config.txt")
 create_photos_dir()
-prompt_screen(prompt1_text_dict[language],80)
-wait_for_button_press()
-create_photo_montage(font,text, mode)
-time.sleep(10)
-prompt_screen(prompt6_text_dict[language])
+running=True
+while running:
+	prompt_screen(prompt1_text_dict[language],80)
+	wait_for_button_press()
+	create_photo_montage(font,text, mode)
+	time.sleep(10)
+	prompt_screen(prompt6_text_dict[language],120)
+	time.sleep(10)
 
 GPIO.cleanup()

@@ -18,7 +18,7 @@ def OK_press():
 	locale.setlocale(locale.LC_ALL, language_dict[lang.get()]) # set the preferred language (i.e. locale) for the event
 
 	with open(config_file, 'w') as output_file:
-		output_file.write("LANGUAGE:%s\nMODE:%s\nFIRSTLINE:%s\nSECONDLINE:%s\nFONT:%s\n"%(lang.get(),mode.get(),firstline.get(),secondline.get(),usrfont.get()))
+		output_file.write("LANGUAGE: %s\nMODE: %s\nFIRSTLINE: %s\nSECONDLINE: %s\nFONT: %s\n"%(lang.get(),mode.get(),firstline.get(),secondline.get(),usrfont.get()))
 	window.quit()
 	
 	
