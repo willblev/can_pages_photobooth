@@ -1,5 +1,5 @@
-LANGUAGE:Espanol
+LANGUAGE:ESP
 MODE:5x15
-FIRSTLINE:Hola 
-SECONDLINE:Amigo
+FIRSTLINE:ññasra+qàsf
+SECONDLINE:è
 FONT:goingtodogreatthings

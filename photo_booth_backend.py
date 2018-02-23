@@ -1,4 +1,4 @@
-import  locale, time, os, subprocess, errno
+import  locale, time, os, subprocess, errno,pygame
 import RPi.GPIO as GPIO
 
 ### Setup GPIO
@@ -10,17 +10,20 @@ GPIO.setup(gpio_pin_number, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 ########  Define global variables
 
 
-
-mode=''
-language=''
+mode='5x15'
+language='ESP'
 text=''
 font=''
 language_dict={		   # dictionary to set the language/locale for each event	
-				'English':'en_US.UTF-8', 
-				'Español':'es_ES.UTF-8', 
-				'Català':'ca_ES.UTF-8'
+				'ENG':'en_US.UTF-8', 
+				'ESP':'es_ES.UTF-8', 
+				'CAT':'ca_ES.UTF-8'
 				}
-#locale.setlocale(locale.LC_ALL, language_dict[self.language]) # set the preferred language (i.e. locale) for the event
+prompt_text_dict={
+				'ENG':"Press\nthe button\nto start!", 
+				'ESP':"Presiona\nel botón\npara comenzar!", 
+				'CAT':"Premeu\nel botó\nper començar!"
+				}
 
 # directories
 scripts_directory="/home/pi/can_pages_photobooth"
@@ -49,24 +52,30 @@ def wait_for_button_press():
 		capture_pictures("1x4")
 	except:
 		pass
+
 def import_config_file(config_file):
 	"""
 	A function which opens a configuration file and imports the settings
 	"""
+	global mode
+	global language
+	global text
+	global font
+	locale.setlocale(locale.LC_ALL, language_dict[language]) # set the preferred language (i.e. locale) for the event
 	with open(config_file,'r') as configuration:
 		for line in configuration:
 			if line.startswith('LANGUAGE:'):
-				language=line.lstrip('LANGUAGE:')
+				language=line.split(':')[1].rstrip()
 			elif line.startswith('FIRSTLINE:'):
 				firstline=line.lstrip('FIRSTLINE:')
 			elif line.startswith('SECONDLINE:'):
 				secondline=line.lstrip('SECONDLINE:')
 			elif line.startswith('FONT:'):
-				font=line.lstrip('FONT:')
+				font=line.split(':')[1].rstrip()
 			elif line.startswith('MODE:'):
-				mode=line.lstrip('MODE:')
+				mode=line.split(':')[1].rstrip()
 		text="%s\n%s"%(firstline,secondline)
-			
+	locale.setlocale(locale.LC_ALL, language_dict[language]) # set the preferred language (i.e. locale) for the event
 def clear_temp_directory():
 	"""
 	A function which deletes all the files in the temp directory
@@ -182,11 +191,40 @@ def create_photo_montage(font,text,mode):
 		print("Please select a correct mode {5x15, 10x15}")
 
 
+def prompt_screen():
+	global language
+	pygame.font.init()
+	WHITE = (255, 255, 255)
+	BLACK = (0, 0, 0)
+	TURQUOISE=(117, 239, 217)
+	PINK=(255, 127, 229)
+
+	FONTSIZE = 160 
+
+	pygame.display.init()
+	size = (pygame.display.Info().current_w, pygame.display.Info().current_h)
+	screen = pygame.display.set_mode(size,pygame.FULLSCREEN)
+	screen.fill(BLACK)        
+	pygame.display.update()
+
+	font = pygame.font.SysFont("DKCosmoStitch", FONTSIZE)
+	text_color = TURQUOISE
+	led_state = False
+	screen.fill(BLACK)
+	text = font.render(prompt_text_dict[language], 1, text_color)
+	textpos = text.get_rect()
+	textpos.center = (pygame.display.Info().current_w/2, pygame.display.Info().current_h/2)
+	screen.blit(text, textpos)
+	pygame.display.flip()
+	time.sleep(2)
+
+
+import_config_file("/home/pi/can_pages_photobooth/config.txt")
 
 create_photos_dir()
-import_config_file("/home/pi/can_pages_photobooth/config.txt")
-wait_for_button_press()
-create_photo_montage(font,text, mode)
+prompt_screen()
+#wait_for_button_press()
+#create_photo_montage(font,text, mode)
 
 
 GPIO.cleanup()

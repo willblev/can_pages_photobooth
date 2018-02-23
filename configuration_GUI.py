@@ -1,9 +1,13 @@
-import tkinter,os, subprocess
+import tkinter,os, subprocess,locale
 from PIL import Image, ImageTk
 config_file="/home/pi/can_pages_photobooth/config.txt"
 temp_photos_directory="/home/pi/Pictures/temp/"
 scripts_directory="/home/pi/can_pages_photobooth/"
-
+language_dict={		   # dictionary to set the language/locale for each event	
+				'ENG':'en_US.UTF-8', 
+				'ESP':'es_ES.UTF-8', 
+				'CAT':'ca_ES.UTF-8'
+				}
 def OK_press():
 	# on button press, save config file and print options that were selected
 	print("Idioma seleciondado: ",lang.get())
@@ -11,6 +15,7 @@ def OK_press():
 	print("Primera linea de texto: ",firstline.get())
 	print("Segunda linea de texto: ",secondline.get())
 	print("Fuente seleciondado: ",usrfont.get())
+	locale.setlocale(locale.LC_ALL, language_dict[lang.get()]) # set the preferred language (i.e. locale) for the event
 
 	with open(config_file, 'w') as output_file:
 		output_file.write("LANGUAGE:%s\nMODE:%s\nFIRSTLINE:%s\nSECONDLINE:%s\nFONT:%s\n"%(lang.get(),mode.get(),firstline.get(),secondline.get(),usrfont.get()))
@@ -55,8 +60,8 @@ fontlist.pack(side="right",fill="both", expand="yes")
 #create the widgets for entering a Language
 lblLanguage = tkinter.Label(window, text="Seleccione el idioma", fg="#383a39", bg="#a1dbcd",font=("Helvetica", 16))
 
-lang.set("Espanol") # default value
-entLanguage = tkinter.OptionMenu(window, lang, "Español", "Català", "English")
+lang.set("ESP") # default value
+entLanguage = tkinter.OptionMenu(window, lang, "ESP", "CAT", "ENG")
 entLanguage.config(font=("Helvetica", 14))
 #and pack them into to the window
 lblLanguage.pack()
