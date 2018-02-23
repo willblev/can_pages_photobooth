@@ -1,5 +1,5 @@
 LANGUAGE:ENG
 MODE:5x15
-FIRSTLINE:ññasra+qàsf
-SECONDLINE:è
-FONT:goingtodogreatthings
+FIRSTLINE:Will + Katie
+SECONDLINE:August 26th 2018
+FONT:Playfair-Display-Bold
