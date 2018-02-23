@@ -19,13 +19,13 @@ def OK_press():
 	
 def preview():
 #on preview button press, render the font/text with imagemagik
-	textString="%s%s"%(firstline.get(),secondline.get())
+	textString="%s\n%s"%(firstline.get(),secondline.get())
 	selectedFont=usrfont.get()
-	command1="convert -background white -size 1000x360 -fill black -font '%s' -gravity center  label:'%s'  %s/text_preview.jpg" % (selectedFont, textString, temp_photos_directory)
+	command1="convert -background white -size 800x200 -fill black -font '%s' -gravity center  label:'%s'  %s/text_preview.jpg" % (selectedFont, textString, temp_photos_directory)
 	subprocess.check_output("%s" % command1, shell=True)
 	img2 = ImageTk.PhotoImage(Image.open(temp_photos_directory+"text_preview.jpg"))
-	panel.configure(image=img2)
-	panel.image = img2
+	fontpreview.configure(image=img2)
+	fontpreview.image = img2
 				
 #create a new window
 window = tkinter.Tk()
@@ -42,12 +42,15 @@ usrfont = tkinter.StringVar(window)
 lang = tkinter.StringVar(window)
 mode = tkinter.StringVar(window)
 
-
 #create a label for the instructions
 lblInst = tkinter.Label(window, text="Configuración", fg="#383a39", bg="#a1dbcd", font=("Helvetica", 16))
 #and pack it into the window
 lblInst.pack()
 
+###font list image
+img = ImageTk.PhotoImage(Image.open(scripts_directory+"font_list.jpg"))
+fontlist= tkinter.Label(window, image=img)
+fontlist.pack(side="right",fill="both", expand="yes")
 
 #create the widgets for entering a Language
 lblLanguage = tkinter.Label(window, text="Seleccione el idioma", fg="#383a39", bg="#a1dbcd",font=("Helvetica", 16))
@@ -140,18 +143,18 @@ entFont.config(font=("Helvetica", 14))
 lblFont.pack()
 entFont.pack()
 
-##preview font image
-img = ImageTk.PhotoImage(Image.open(scripts_directory+"font_list.jpg"))
-panel = tkinter.Label(window, image=img)
-panel.pack(side="bottom", fill="both", expand="yes")
-
-
 #create a button widget called btn
-btn = tkinter.Button(window, text="Vista preliminar", fg="#a1dbcd", bg="#383a39", command=preview)
+btn = tkinter.Button(window, text="Vista preliminar", fg="#a1dbcd", bg="#383a39", command=preview,font=("Helvetica", 16))
 #pack the widget into the window
 btn.pack()
+##preview text+font image
+img3 = ImageTk.PhotoImage(Image.open(scripts_directory+"text_preview.jpg"))
+fontpreview = tkinter.Label(window, image=img3)
+fontpreview.pack(fill="both", expand="yes")
+
+
 #create a button widget called btn
-btn = tkinter.Button(window, text="OK", fg="#a1dbcd", bg="#383a39", command=OK_press)
+btn = tkinter.Button(window, text="Guardar y salir", fg="#a1dbcd", bg="#383a39", command=OK_press, font=("Helvetica", 18))
 #pack the widget into the window
 btn.pack()
 

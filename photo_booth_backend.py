@@ -184,9 +184,9 @@ def create_photo_montage(font,text,mode):
 
 
 create_photos_dir()
-import_config_file()
+import_config_file("/home/pi/can_pages_photobooth/config.txt")
 wait_for_button_press()
-create_photo_montage(font,text, 'mode')
+create_photo_montage(font,text, mode)
 
 
 GPIO.cleanup()
