@@ -148,7 +148,7 @@ def create_photo_montage(font,text,mode):
 								try:         
 									command="lp -d Dai_Nippon_Printing_DS40/1x4 %s/temp_montage_final.jpg" % (temp_photos_directory)
 									print(command)
-									#subprocess.check_output("%s" % command, shell=True)							
+									subprocess.check_output("%s" % command, shell=True)							
 								except subprocess.CalledProcessError as e:
 									print(e.output)	
 							except subprocess.CalledProcessError as e:
