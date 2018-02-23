@@ -1,5 +1,5 @@
 LANGUAGE:Espanol
 MODE:5x15
-FIRSTLINE:sdfklsdjfklj
-SECONDLINE:sdlkjfsdlkjsdlkj
-FONT:Helveticia
+FIRSTLINE:Hi 140_+-
+SECONDLINE:123.,124
+FONT:Mrs.-Monster-Bold-Outline

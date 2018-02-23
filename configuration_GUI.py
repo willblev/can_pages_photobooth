@@ -1,8 +1,8 @@
 import tkinter,os, subprocess
 from PIL import Image, ImageTk
-config_file="/home/william/github/can_pages_photobooth/config.txt"
-temp_photos_directory="/home/william/github/can_pages_photobooth/"
-scripts_directory="/home/william/github/can_pages_photobooth/"
+config_file="/home/pi/can_pages_photobooth/config.txt"
+temp_photos_directory="/home/pi/Pictures/temp/"
+scripts_directory="/home/pi/can_pages_photobooth/"
 
 def OK_press():
 	# on button press, save config file and print options that were selected
@@ -19,7 +19,7 @@ def OK_press():
 	
 def preview():
 #on preview button press, render the font/text with imagemagik
-	textString="%s\n%s"%(firstline.get(),secondline.get())
+	textString="%s%s"%(firstline.get(),secondline.get())
 	selectedFont=usrfont.get()
 	command1="convert -background white -size 1000x360 -fill black -font '%s' -gravity center  label:'%s'  %s/text_preview.jpg" % (selectedFont, textString, temp_photos_directory)
 	subprocess.check_output("%s" % command1, shell=True)
@@ -88,8 +88,52 @@ entSecondLine.pack()
 #create the widgets for choosing a font
 lblFont = tkinter.Label(window, text="Seleccione la fuente", fg="#383a39", bg="#a1dbcd",font=("Helvetica", 16))
 
-usrfont.set("Helveticia") # default value
-entFont = tkinter.OptionMenu(window, usrfont, "Helvetica", "goingtodogreatthings", "Comicsans")
+usrfont.set("goingtodogreatthings") # default value
+entFont = tkinter.OptionMenu(window, usrfont,  
+   "Adventure",
+ "Adventure-Outline",
+ "Alba",
+ "Alba-Super",
+ "AlexandriaFLF",
+ "Allura",
+ "Always-In-My-Heart",
+ "Another-Typewriter",
+ "Austie-Bost-You-Wear-Flowers-Hollow",
+ "Bakery",
+ "BehrensSchrift-Normalreduced",
+ "Black-Rose",
+ "Bookman-Demi",
+ "Chocolate-Covered-Raindrops",
+ "Clicker-Script",
+ "CoalhandLukeTRIAL",
+ "DancingScript-Bold",
+ "DKCosmoStitch",
+ "Give-It-Your-Heart",
+ "goingtodogreatthings",
+ "Impact-Label",
+ "Janda-Scrapgirl-Dots",
+ "Journey-to-Thailand",
+ "justbeautifulsimplicity",
+ "KG-A-Little-Swag",
+ "Kingthings-Extortion",
+ "Lato-Regular",
+ "Life-is-goofy",
+ "Long-distance-call",
+ "Montserrat-Regular",
+ "Moon-Flower",
+ "Moon-Flower-Bold",
+ "Mrs.-Monster-Regular",
+ "orange-juice",
+ "Playfair-Display-Bold",
+ "Prisma",
+ "Reality-Sunday",
+ "Royal-Acidbath-Outline",
+ "SF-Balloons",
+ "Shorelines-Script-Bold",
+ "Silk-Remington-SBold",
+ "Videophreak",
+ "YouMurderer-BB"
+)
 entFont.config(font=("Helvetica", 14))
 
 #and pack them into to the window
