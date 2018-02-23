@@ -9,12 +9,16 @@ GPIO.setup(gpio_pin_number, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 ########  Define global variables
 
-modes=['1x4','single']
-fonts_list=['goingtodogreatthings']
+
+
+mode=''
+language=''
+text=''
+font=''
 language_dict={		   # dictionary to set the language/locale for each event	
-				'eng':'en_US.UTF-8', 
-				'esp':'es_ES.UTF-8', 
-				'cat':'ca_ES.UTF-8'
+				'English':'en_US.UTF-8', 
+				'Español':'es_ES.UTF-8', 
+				'Català':'ca_ES.UTF-8'
 				}
 #locale.setlocale(locale.LC_ALL, language_dict[self.language]) # set the preferred language (i.e. locale) for the event
 
@@ -30,6 +34,9 @@ date_number_string="%s %s %s" % (time.strftime("%d").lstrip("0"),time.strftime("
 ###### Define functions
 
 def wait_for_button_press():
+	"""
+	A function which listens for button presses, then begins the photobooth series of events"
+	"""
 	try:
 		GPIO.wait_for_edge(gpio_pin_number, GPIO.FALLING)
 		
@@ -42,7 +49,24 @@ def wait_for_button_press():
 		capture_pictures("1x4")
 	except:
 		pass
-
+def import_config_file(config_file):
+	"""
+	A function which opens a configuration file and imports the settings
+	"""
+	with open(config_file,'r') as configuration:
+		for line in configuration:
+			if line.startswith('LANGUAGE:'):
+				language=line.lstrip('LANGUAGE:')
+			elif line.startswith('FIRSTLINE:'):
+				firstline=line.lstrip('FIRSTLINE:')
+			elif line.startswith('SECONDLINE:'):
+				secondline=line.lstrip('SECONDLINE:')
+			elif line.startswith('FONT:'):
+				font=line.lstrip('FONT:')
+			elif line.startswith('MODE:'):
+				mode=line.lstrip('MODE:')
+		text="%s\n%s"%(firstline,secondline)
+			
 def clear_temp_directory():
 	"""
 	A function which deletes all the files in the temp directory
@@ -76,7 +100,7 @@ def capture_pictures(mode):
 			command="gphoto2 --capture-image-and-download --filename %s/capture_%s:%s:%s.jpg"%(temp_photos_directory,time.strftime("%H"),time.strftime("%M"),time.strftime("%S"))
 			subprocess.check_output("%s"% command, shell=True)
 		except subprocess.CalledProcessError as e:
-			print e.output
+			print(e.output)
 	else: 
 		pass
 
@@ -87,7 +111,7 @@ def create_photos_dir():
 			os.makedirs(photos_directory)
 			print("Created "+photos_directory)
 		except subprocess.CalledProcessError as e:
-			print e.output
+			print(e.output)
 			
 			
 def create_photo_montage(font,text,mode):
@@ -95,7 +119,7 @@ def create_photo_montage(font,text,mode):
 	A function which takes the captured images and creates a file (single shot or 1x4 photo strip) in the appropriate directory
 	"""
 						
-	if mode=="1x4":
+	if mode=="5x15":
 		try:         
 			command="mogrify -resize 960x640 %s/capture*.jpg" % temp_photos_directory
 			print(command)
@@ -139,7 +163,7 @@ def create_photo_montage(font,text,mode):
 				print(e.output)	
 		except subprocess.CalledProcessError as e:
 			print(e.output)		
-	elif mode=="single":
+	elif mode=="10x15":
 		try:         
 			new_file_name="%s/Can_Pages_Photobooth_%s:%s:%s.jpg" %(photos_directory,time.strftime("%H"),time.strftime("%M"),time.strftime("%S"))
 			command="cp %s/capture*.jpg %s" % (temp_photos_directory,new_file_name)
@@ -155,14 +179,14 @@ def create_photo_montage(font,text,mode):
 		except subprocess.CalledProcessError as e:
 			print(e.output)		
 	else: 
-		print("Please select a correct mode {single, 1x4}")
+		print("Please select a correct mode {5x15, 10x15}")
 
 
 
 create_photos_dir()
+import_config_file()
 wait_for_button_press()
-
-create_photo_montage(fonts_list[0],text, '1x4')
+create_photo_montage(font,text, 'mode')
 
 
 GPIO.cleanup()

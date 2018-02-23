@@ -1,4 +1,5 @@
-Espanol
-whats up
-not much
-Comicsans
+LANGUAGE:Espanol
+MODE:5x15
+FIRSTLINE:sdfklsdjfklj
+SECONDLINE:sdlkjfsdlkjsdlkj
+FONT:Helveticia
