@@ -20,9 +20,9 @@ language_dict={		   # dictionary to set the language/locale for each event
 				'CAT':'ca_ES.UTF-8'
 				}
 prompt_text_dict={
-				'ENG':"Press\nthe button\nto start!", 
-				'ESP':"Presiona\nel botón\npara comenzar!", 
-				'CAT':"Premeu\nel botó\nper començar!"
+				'ENG':'Press the button to start!', 
+				'ESP':'Presiona el botón para comenzar!', 
+				'CAT':'Premeu el botó per començar!'
 				}
 
 # directories
@@ -199,7 +199,7 @@ def prompt_screen():
 	TURQUOISE=(117, 239, 217)
 	PINK=(255, 127, 229)
 
-	FONTSIZE = 160 
+	FONTSIZE = 80 
 
 	pygame.display.init()
 	size = (pygame.display.Info().current_w, pygame.display.Info().current_h)
