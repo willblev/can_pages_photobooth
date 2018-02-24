@@ -1,5 +1,5 @@
-LANGUAGE:ESP
-MODE:5x15
-FIRSTLINE:Boda de las bodas
-SECONDLINE:Can Pagès 24.2.2018
-FONT:DancingScript-Bold
+LANGUAGE: CAT
+MODE: 5x15
+FIRSTLINE: Boda de las bodas
+SECONDLINE: Can Pagès 24.2.2018
+FONT: Journey-to-Thailand

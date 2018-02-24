@@ -1,11 +1,6 @@
 import  locale, time, os, subprocess, errno,pygame
 import RPi.GPIO as GPIO
 
-### Setup GPIO
-gpio_pin_number=21
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(gpio_pin_number, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-
 
 ########  Define global variables
 
@@ -252,6 +247,11 @@ def prompt_screen(inputText,fontSize):
 	screen.blit(text, textpos)
 	pygame.display.flip()
 
+
+### Setup GPIO
+gpio_pin_number=21
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(gpio_pin_number, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 
 import_config_file("/home/pi/can_pages_photobooth/config.txt")
